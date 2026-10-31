@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>The Daily Brief</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>">
+<style>
+:root{--bg:#F5F5F4;--panel:#FFFFFF;--ink:#111827;--muted:#6B7280;--soft:#9CA3AF;--line:#E7E5E4;--hover:#F5F5F4;--tldr:#F9FAFB;--deep:#FFFBEB;--deepline:#FCD34D;--deepink:#92400E}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0C0A09;--panel:#1C1917;--ink:#F5F5F4;--muted:#A8A29E;--soft:#78716C;--line:#292524;--hover:#292524;--tldr:#231F1D;--deep:#2A2110;--deepline:#78591C;--deepink:#FCD34D}}
+:root[data-theme="dark"]{--bg:#0C0A09;--panel:#1C1917;--ink:#F5F5F4;--muted:#A8A29E;--soft:#78716C;--line:#292524;--hover:#292524;--tldr:#231F1D;--deep:#2A2110;--deepline:#78591C;--deepink:#FCD34D}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+a{color:inherit}
+button,input{font:inherit;color:inherit}
+/* lock */
+#lock{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px}
+#lock form{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px;width:100%;max-width:360px;text-align:center}
+#lock h1{margin:6px 0 4px;font-size:22px}
+#lock p{margin:0 0 18px;color:var(--muted);font-size:13px}
+#lock input{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:9px;background:var(--bg);margin-bottom:10px}
+#lock button{width:100%;padding:11px;border:0;border-radius:9px;background:var(--ink);color:var(--panel);font-weight:700;cursor:pointer}
+#lockerr{color:#DC2626;font-size:13px;min-height:18px;margin-top:8px}
+/* app */
+#app{display:none}
+header{position:sticky;top:0;z-index:5;background:var(--panel);border-bottom:1px solid var(--line)}
+.bar{max-width:1180px;margin:0 auto;padding:12px 16px;display:flex;gap:12px;align-items:center}
+.brand{font-weight:800;letter-spacing:.5px;white-space:nowrap;cursor:pointer}
+.brand small{display:block;font-size:10px;letter-spacing:2.5px;color:var(--soft);font-weight:700}
+#q{flex:1;min-width:0;padding:9px 12px;border:1px solid var(--line);border-radius:9px;background:var(--bg)}
+.iconbtn{border:1px solid var(--line);background:var(--bg);border-radius:9px;padding:8px 10px;cursor:pointer}
+.wrap{max-width:1180px;margin:0 auto;padding:20px 16px 60px;display:grid;grid-template-columns:230px 1fr;gap:24px}
+nav h3{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--soft);margin:0 0 8px}
+nav .list{display:flex;flex-direction:column;gap:2px;margin-bottom:22px}
+nav a{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;text-decoration:none;font-size:14px}
+nav a:hover{background:var(--hover)}
+nav a.on{background:var(--panel);box-shadow:0 0 0 1px var(--line);font-weight:700}
+nav a .n{font-size:12px;color:var(--soft);font-weight:500}
+nav .days{max-height:46vh;overflow:auto}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+main{min-width:0}
+.title{font-size:28px;font-weight:800;margin:0}
+.sub{color:var(--muted);font-size:14px;margin:2px 0 16px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.chip{border:1px solid var(--line);background:var(--panel);border-radius:16px;padding:5px 12px;font-size:13px;cursor:pointer;text-decoration:none;white-space:nowrap}
+.chip.on{color:#fff;border-color:transparent}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:16px}
+.label{font-size:11px;font-weight:800;letter-spacing:1.5px;margin-bottom:6px}
+.tldr{background:var(--tldr)}
+.tldr ol{margin:0;padding-left:20px}
+.tldr li{padding:3px 0}
+.tldr a{text-decoration:none}
+.tldr a:hover{text-decoration:underline}
+.deep{background:var(--deep);border-color:var(--deepline)}
+.deep .label{color:var(--deepink)}
+.deep .item+.item{border-top:1px solid var(--deepline);margin-top:10px;padding-top:10px}
+.deep h4{margin:0 0 3px;font-size:16px}
+.deep p{margin:0 0 6px;color:var(--muted);font-size:14px}
+section{margin-top:26px}
+section>h2{display:flex;justify-content:space-between;align-items:baseline;font-size:20px;margin:0 0 4px;padding-bottom:6px;border-bottom:3px solid}
+section>h2 a{font-size:12px;font-weight:600;text-decoration:none}
+.subhead{font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--soft);margin:14px 0 2px}
+.story{padding:11px 0 13px;border-bottom:1px solid var(--line)}
+.story:last-child{border-bottom:0}
+.story h3{margin:0;font-size:16px;line-height:1.35}
+.story h3 a{text-decoration:none}
+.story h3 a:hover{text-decoration:underline}
+.story p{margin:4px 0 7px;color:var(--muted);font-size:14px;line-height:1.5}
+.meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px;color:var(--soft)}
+.tag{border:1px solid var(--line);border-radius:10px;padding:0 8px;cursor:pointer;background:none;font-size:11px}
+.meta a{color:var(--muted)}
+.when{font-size:12px;color:var(--soft);font-weight:700;margin:22px 0 2px;text-transform:uppercase;letter-spacing:1px}
+.empty{color:var(--muted);padding:40px 0;text-align:center}
+@media (max-width:820px){
+  .wrap{grid-template-columns:1fr;gap:6px}
+  nav h3{display:none}
+  nav .list{flex-direction:row;overflow-x:auto;margin-bottom:8px;padding-bottom:4px}
+  nav .days{max-height:none}
+  nav a{white-space:nowrap;border:1px solid var(--line);background:var(--panel)}
+  .title{font-size:23px}
+  .brand small{display:none}
+}
+</style>
+</head>
+<body>
+<div id="lock">
+  <form id="lockform">
+    <div style="font-size:34px">☕</div>
+    <h1>The Daily Brief</h1>
+    <p>Deals, consumer, sports, media &amp; celebrity founders</p>
+    <input id="pw" type="password" placeholder="Password" autocomplete="current-password" autofocus>
+    <button type="submit">Unlock</button>
+    <div id="lockerr"></div>
+  </form>
+</div>
+<div id="app">
+  <header><div class="bar">
+    <div class="brand" onclick="go({})"><small>THE</small>DAILY BRIEF</div>
+    <input id="q" type="search" placeholder="Search every day — company, person, topic…">
+    <button class="iconbtn" id="theme" title="Toggle theme">◐</button>
+  </div></header>
+  <div class="wrap">
+    <nav>
+      <h3>Industries</h3><div class="list" id="navsec"></div>
+      <h3>Past days</h3><div class="list days" id="navdays"></div>
+    </nav>
+    <main id="main"></main>
+  </div>
+</div>
+<script>
+const KEY = "dailybrief.pw";
+let DATA = null;
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const store = { get(k){ try { return localStorage.getItem(k) } catch(e){ return null } },
+                set(k,v){ try { localStorage.setItem(k,v) } catch(e){} },
+                del(k){ try { localStorage.removeItem(k) } catch(e){} } };
+
+const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+async function decrypt(blob, pw){
+  const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw), "PBKDF2", false, ["deriveKey"]);
+  const key = await crypto.subtle.deriveKey({name:"PBKDF2", salt:b64(blob.salt), iterations:blob.iter, hash:"SHA-256"},
+                                            base, {name:"AES-GCM", length:256}, false, ["decrypt"]);
+  const pt = await crypto.subtle.decrypt({name:"AES-GCM", iv:b64(blob.iv)}, key, b64(blob.ct));
+  return JSON.parse(new TextDecoder().decode(pt));
+}
+async function unlock(pw){
+  const blob = await (await fetch("data.enc.json?t=" + Date.now(), {cache:"no-store"})).json();
+  DATA = await decrypt(blob, pw);
+  store.set(KEY, pw);
+  $("#lock").style.display = "none"; $("#app").style.display = "block";
+  render();
+}
+$("#lockform").onsubmit = async ev => {
+  ev.preventDefault(); $("#lockerr").textContent = "";
+  try { await unlock($("#pw").value) } catch(e){ $("#lockerr").textContent = "Wrong password." }
+};
+const saved = store.get(KEY);
+if (saved) unlock(saved).catch(() => store.del(KEY));
+
+// theme
+const setTheme = t => { if (t) document.documentElement.dataset.theme = t; else delete document.documentElement.dataset.theme };
+setTheme(store.get("dailybrief.theme"));
+$("#theme").onclick = () => {
+  const dark = document.documentElement.dataset.theme ? document.documentElement.dataset.theme === "dark"
+             : matchMedia("(prefers-color-scheme: dark)").matches;
+  const t = dark ? "light" : "dark"; setTheme(t); store.set("dailybrief.theme", t);
+};
+
+// routing: #day=YYYY-MM-DD & s=section & sub=… & q=…
+const state = () => Object.fromEntries(new URLSearchParams(location.hash.slice(1)));
+function go(p){ location.hash = new URLSearchParams(Object.entries(p).filter(([,v]) => v)).toString(); }
+window.addEventListener("hashchange", () => DATA && render());
+let qt; $("#q").oninput = e => { clearTimeout(qt); qt = setTimeout(() => go({q: e.target.value.trim()}), 200) };
+
+const fmt = (d, opt) => new Date(d + "T12:00:00").toLocaleDateString("en-US", opt);
+const sec = k => DATA.sections[k];
+
+function storyHTML(s, showSec){
+  const S = sec(s.section);
+  return `<div class="story">
+    <h3><a href="${esc(s.links[0].url)}" target="_blank" rel="noopener">${esc(s.headline)}</a></h3>
+    <p>${esc(s.takeaway)}</p>
+    <div class="meta">
+      ${showSec ? `<span style="color:${S.color};font-weight:700">${S.emoji} ${esc(S.label)}</span>·` : ""}
+      ${(s.tags||[]).map(t => `<button class="tag" onclick="go({q:'${esc(t).replace(/'/g,"\\'")}'})">${esc(t)}</button>`).join("")}
+      ${s.links.map(l => `<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.source)}</a>`).join(" · ")}
+    </div></div>`;
+}
+
+function sectionBlock(k, stories, dayLink){
+  const S = sec(k);
+  let body = "";
+  for (const sub of S.subs){
+    const g = stories.filter(s => s.subsection === sub);
+    if (g.length) body += `<div class="subhead">${esc(sub)}</div>` + g.map(s => storyHTML(s)).join("");
+  }
+  return `<section id="sec-${k}"><h2 style="color:${S.color};border-color:${S.color}">
+      <span>${S.emoji} ${esc(S.label)}</span><a href="#s=${k}" style="color:${S.color}">All days →</a></h2>${body}</section>`;
+}
+
+function renderNav(st){
+  const all = DATA.days.flatMap(d => d.stories);
+  $("#navsec").innerHTML = Object.entries(DATA.sections).map(([k,S]) =>
+    `<a href="#s=${k}" class="${st.s===k && !st.day ? "on":""}"><span><span class="dot" style="background:${S.color}"></span>${esc(S.label)}</span>
+     <span class="n">${all.filter(s => s.section===k).length}</span></a>`).join("");
+  const cur = st.day || (!st.s && !st.q && DATA.days[0]?.day);
+  $("#navdays").innerHTML = DATA.days.map(d =>
+    `<a href="#day=${d.day}" class="${d.day===cur ? "on":""}"><span>${fmt(d.day,{weekday:"short",month:"short",day:"numeric"})}</span>
+     <span class="n">${d.stories.length}</span></a>`).join("");
+}
+
+function dayView(st){
+  const d = DATA.days.find(x => x.day === st.day) || DATA.days[0];
+  if (!d) return `<div class="empty">No briefs yet.</div>`;
+  const byId = Object.fromEntries(d.stories.map(s => [s.id, s]));
+  const present = Object.keys(DATA.sections).filter(k => d.stories.some(s => s.section === k));
+  const only = st.s && present.includes(st.s) ? st.s : null;
+  const chips = `<div class="chips"><a class="chip ${only?"":"on"}" style="${only?"":"background:var(--ink);color:var(--panel)"}" href="#day=${d.day}">All (${d.stories.length})</a>` +
+    present.map(k => { const S = sec(k), n = d.stories.filter(s => s.section===k).length;
+      return `<a class="chip ${only===k?"on":""}" style="${only===k?`background:${S.color}`:""}" href="#day=${d.day}&s=${k}">${S.emoji} ${esc(S.label.split(" & ")[0])} (${n})</a>` }).join("") + `</div>`;
+  let h = `<h1 class="title">${fmt(d.day,{weekday:"long",month:"long",day:"numeric",year:"numeric"})}</h1>
+    <div class="sub">${d.stories.length} stories</div>${chips}`;
+  if (!only){
+    if (d.tldr.length) h += `<div class="card tldr"><div class="label">⚡ TL;DR</div><ol>${d.tldr.map(t =>
+      `<li><a href="${esc(byId[t.story].links[0].url)}" target="_blank" rel="noopener">${esc(t.text)}</a></li>`).join("")}</ol></div>`;
+    if (d.deep_dives.length) h += `<div class="card deep"><div class="label">🔍 WORTH A DEEP DIVE</div>${d.deep_dives.map(x =>
+      `<div class="item"><h4>${esc(x.title || byId[x.story].headline)}</h4><p>${esc(x.why)}</p><div class="meta">Read more: ${x.links.map(l =>
+      `<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.source)}</a>`).join(" · ")}</div></div>`).join("")}</div>`;
+  }
+  for (const k of only ? [only] : present) h += `<div class="card">${sectionBlock(k, d.stories.filter(s => s.section===k))}</div>`;
+  return h.replace(/<div class="card"><section/g, '<div class="card"><section style="margin-top:0"');
+}
+
+function sectionView(st){
+  const S = sec(st.s);
+  const rows = DATA.days.map(d => [d.day, d.stories.filter(s => s.section===st.s && (!st.sub || s.subsection===st.sub))]).filter(([,g]) => g.length);
+  const total = DATA.days.flatMap(d => d.stories).filter(s => s.section===st.s);
+  const chips = `<div class="chips"><a class="chip ${st.sub?"":"on"}" style="${st.sub?"":`background:${S.color}`}" href="#s=${st.s}">All (${total.length})</a>` +
+    S.subs.map(sub => { const n = total.filter(s => s.subsection===sub).length; if (!n) return "";
+      return `<a class="chip ${st.sub===sub?"on":""}" style="${st.sub===sub?`background:${S.color}`:""}" href="#s=${st.s}&sub=${encodeURIComponent(sub)}">${esc(sub)} (${n})</a>` }).join("") + `</div>`;
+  return `<h1 class="title" style="color:${S.color}">${S.emoji} ${esc(S.label)}</h1><div class="sub">Every story across all days</div>${chips}` +
+    (rows.length ? rows.map(([day,g]) => `<div class="when"><a href="#day=${day}" style="text-decoration:none">${fmt(day,{weekday:"long",month:"short",day:"numeric"})}</a></div>
+      <div class="card">${g.map(s => storyHTML(s)).join("")}</div>`).join("") : `<div class="empty">Nothing here yet.</div>`);
+}
+
+function searchView(st){
+  const terms = st.q.toLowerCase().split(/\s+/).filter(Boolean);
+  const hit = s => { const t = (s.headline+" "+s.takeaway+" "+(s.tags||[]).join(" ")+" "+s.links.map(l=>l.source).join(" ")).toLowerCase();
+                     return terms.every(w => t.includes(w)) };
+  const rows = DATA.days.map(d => [d.day, d.stories.filter(hit)]).filter(([,g]) => g.length);
+  const n = rows.reduce((a,[,g]) => a+g.length, 0);
+  return `<h1 class="title">“${esc(st.q)}”</h1><div class="sub">${n} ${n===1?"story":"stories"}</div>` +
+    (rows.length ? rows.map(([day,g]) => `<div class="when"><a href="#day=${day}" style="text-decoration:none">${fmt(day,{weekday:"long",month:"short",day:"numeric"})}</a></div>
+      <div class="card">${g.map(s => storyHTML(s, true)).join("")}</div>`).join("") : `<div class="empty">No matches.</div>`);
+}
+
+function render(){
+  const st = state();
+  if ($("#q").value.trim() !== (st.q||"")) $("#q").value = st.q || "";
+  renderNav(st);
+  $("#main").innerHTML = st.q ? searchView(st) : (st.s && !st.day && DATA.sections[st.s]) ? sectionView(st) : dayView(st);
+  if (st.day && st.s) {} else window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
