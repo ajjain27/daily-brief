@@ -49,7 +49,9 @@ main{min-width:0}
 .label{font-size:11px;font-weight:800;letter-spacing:1.5px;margin-bottom:6px}
 .tldr{background:var(--tldr)}
 .tldr ol{margin:0;padding-left:20px}
-.tldr li{padding:3px 0}
+.tldr li{padding:5px 0}
+.impact{color:var(--muted);font-size:14px;margin-top:2px}
+.impact b{color:#0F7B5F}
 .tldr a{text-decoration:none}
 .tldr a:hover{text-decoration:underline}
 .deep{background:var(--deep);border-color:var(--deepline)}
@@ -205,7 +207,7 @@ function dayView(st){
     <div class="sub">${d.stories.length} stories</div>${chips}`;
   if (!only){
     if (d.tldr.length) h += `<div class="card tldr"><div class="label">⚡ TL;DR</div><ol>${d.tldr.map(t =>
-      `<li><a href="${esc(byId[t.story].links[0].url)}" target="_blank" rel="noopener">${esc(t.text)}</a></li>`).join("")}</ol></div>`;
+      `<li><a href="${esc(byId[t.story].links[0].url)}" target="_blank" rel="noopener"><b>${esc(t.text)}</b></a>${t.impact ? `<div class="impact"><b>Why it matters:</b> ${esc(t.impact)}</div>` : ""}</li>`).join("")}</ol></div>`;
     if (d.deep_dives.length) h += `<div class="card deep"><div class="label">🔍 WORTH A DEEP DIVE</div>${d.deep_dives.map(x =>
       `<div class="item"><h4>${esc(x.title || byId[x.story].headline)}</h4><p>${esc(x.why)}</p><div class="meta">Read more: ${x.links.map(l =>
       `<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.source)}</a>`).join(" · ")}</div></div>`).join("")}</div>`;
