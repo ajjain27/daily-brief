@@ -7,13 +7,13 @@
 <title>The Daily Brief</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>">
 <style>
-:root{--bg:#F5F5F4;--panel:#FFFFFF;--ink:#111827;--muted:#6B7280;--soft:#9CA3AF;--line:#E7E5E4;--hover:#F5F5F4;--tldr:#F9FAFB;--deep:#FFFBEB;--deepline:#FCD34D;--deepink:#92400E}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0C0A09;--panel:#1C1917;--ink:#F5F5F4;--muted:#A8A29E;--soft:#78716C;--line:#292524;--hover:#292524;--tldr:#231F1D;--deep:#2A2110;--deepline:#78591C;--deepink:#FCD34D}}
-:root[data-theme="dark"]{--bg:#0C0A09;--panel:#1C1917;--ink:#F5F5F4;--muted:#A8A29E;--soft:#78716C;--line:#292524;--hover:#292524;--tldr:#231F1D;--deep:#2A2110;--deepline:#78591C;--deepink:#FCD34D}
+:root{--bg:#F5F5F4;--panel:#FFFFFF;--ink:#111827;--muted:#6B7280;--soft:#9CA3AF;--line:#E7E5E4;--hover:#F5F5F4;--tldr:#F9FAFB;--deep:#FFFBEB;--deepline:#FCD34D;--deepink:#92400E;--termbg:#EFF6FF}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0C0A09;--panel:#1C1917;--ink:#F5F5F4;--muted:#A8A29E;--soft:#78716C;--line:#292524;--hover:#292524;--tldr:#231F1D;--deep:#2A2110;--deepline:#78591C;--deepink:#FCD34D;--termbg:#172033}}
+:root[data-theme="dark"]{--bg:#0C0A09;--panel:#1C1917;--ink:#F5F5F4;--muted:#A8A29E;--soft:#78716C;--line:#292524;--hover:#292524;--tldr:#231F1D;--deep:#2A2110;--deepline:#78591C;--deepink:#FCD34D;--termbg:#172033}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
 a{color:inherit}
-button,input{font:inherit;color:inherit}
+button,input,textarea{font:inherit;color:inherit}
 /* lock */
 #lock{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px}
 #lock form{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px;width:100%;max-width:360px;text-align:center}
@@ -69,6 +69,21 @@ section>h2 a{font-size:12px;font-weight:600;text-decoration:none}
 .story h3 a{text-decoration:none}
 .story h3 a:hover{text-decoration:underline}
 .story p{margin:4px 0 7px;color:var(--muted);font-size:14px;line-height:1.5}
+.bib{display:inline-block;font-size:10px;font-weight:800;letter-spacing:1px;color:#fff;background:#B85C47;border-radius:4px;padding:2px 6px;margin-right:7px;vertical-align:2px}
+.bibwhy{font-size:13.5px;color:#B85C47;font-style:italic;margin:0 0 8px}
+.ask{margin-left:auto;font-size:12px;color:var(--muted);text-decoration:none;white-space:nowrap}
+.ask:hover{color:var(--ink);text-decoration:underline}
+#askbtn{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:20;border:0;border-radius:999px;padding:12px 18px;background:var(--ink);color:var(--panel);font-weight:700;box-shadow:0 6px 20px rgba(0,0,0,.18);cursor:pointer}
+#askpanel{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:20;width:min(380px,calc(100vw - 32px));background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:0 12px 40px rgba(0,0,0,.2)}
+#askpanel h4{margin:0 0 2px;font-size:15px}
+#askpanel p{margin:0 0 10px;color:var(--muted);font-size:12.5px}
+#askq{width:100%;min-height:76px;resize:vertical;padding:10px;border:1px solid var(--line);border-radius:9px;background:var(--bg)}
+.quick{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 10px}
+.quick button{border:1px solid var(--line);background:var(--bg);border-radius:14px;padding:4px 10px;font-size:12px;cursor:pointer}
+#askgo{width:100%;padding:10px;border:0;border-radius:9px;background:var(--ink);color:var(--panel);font-weight:700;cursor:pointer}
+.term{font-size:13.5px;line-height:1.45;background:var(--termbg);border-left:3px solid #3B82F6;padding:6px 10px;margin:0 0 8px;border-radius:0 6px 6px 0}
+.gl{padding:10px 0;border-bottom:1px solid var(--line)}.gl:last-child{border-bottom:0}
+.gl b{font-size:15px}.gl p{margin:3px 0 0;color:var(--muted);font-size:14px}.gl small{color:var(--soft)}
 .meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px;color:var(--soft)}
 .tag{border:1px solid var(--line);border-radius:10px;padding:0 8px;cursor:pointer;background:none;font-size:11px}
 .meta a{color:var(--muted)}
@@ -109,6 +124,19 @@ section>h2 a{font-size:12px;font-weight:600;text-decoration:none}
       <h3>Past days</h3><div class="list days" id="navdays"></div>
     </nav>
     <main id="main"></main>
+  </div>
+  <button id="askbtn" type="button" aria-expanded="false" aria-controls="askpanel">💬 Ask Claude</button>
+  <div id="askpanel" hidden>
+    <h4>Ask about what you're reading</h4>
+    <p>Opens Claude in a new tab with your question and the stories on this screen.</p>
+    <textarea id="askq" placeholder="e.g. Why does this deal matter for Uber?"></textarea>
+    <div class="quick">
+      <button type="button">Explain today's biggest story</button>
+      <button type="button">What should I know about the economy from this?</button>
+      <button type="button">Which of these matter most for Beauty in Balance?</button>
+      <button type="button">Explain the finance terms in plain English</button>
+    </div>
+    <button id="askgo" type="button">Ask Claude ↗</button>
   </div>
 </div>
 <script>
@@ -163,14 +191,35 @@ const sec = k => DATA.sections[k];
 function storyHTML(s, showSec){
   const S = sec(s.section);
   return `<div class="story">
-    <h3><a href="${esc(s.links[0].url)}" target="_blank" rel="noopener">${esc(s.headline)}</a></h3>
+    <h3>${s.bib ? `<span class="bib">BIB</span>` : ""}<a href="${esc(s.links[0].url)}" target="_blank" rel="noopener">${esc(s.headline)}</a></h3>
     <p>${esc(s.takeaway)}</p>
+    ${s.bib && s.bib_why ? `<div class="bibwhy">✨ BIB angle: ${esc(s.bib_why)}</div>` : ""}
+    ${(s.terms||[]).map(t => `<div class="term">📘 <b>${esc(t.term)}:</b> ${esc(t.def)}</div>`).join("")}
     <div class="meta">
       ${showSec ? `<span style="color:${S.color};font-weight:700">${S.emoji} ${esc(S.label)}</span>·` : ""}
       ${(s.tags||[]).map(t => `<button class="tag" onclick="go({q:'${esc(t).replace(/'/g,"\\'")}'})">${esc(t)}</button>`).join("")}
       ${s.links.map(l => `<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.source)}</a>`).join(" · ")}
+      <a class="ask" href="${esc(askURL(storyPrompt(s)))}" target="_blank" rel="noopener">💬 Ask Claude</a>
     </div></div>`;
 }
+
+// ---- Ask Claude: opens claude.ai in a new tab with the question + the stories on screen as context ----
+let VIEW = [];  // stories currently on screen, set by render()
+const brief = s => `- [${sec(s.section).label}] ${s.headline}: ${s.takeaway} (${s.links[0].url})`;
+function storyPrompt(s){
+  return `I'm reading my daily business news brief. Explain this story more deeply: what happened, the background, ` +
+    `who wins and loses, what it means for the industry and the economy, and define any finance terms simply.\n\n${brief(s)}` +
+    (s.bib ? `\n\nAlso: what does it mean for multi-hyphenate creatives and for ${BIB_SHORT}?` : "");
+}
+const BIB_SHORT = "Beauty in Balance (a community helping multi-hyphenates balance, brand and monetize creative passions alongside a career)";
+function contextPrompt(q){
+  let ctx = "", n = 0;
+  for (const s of VIEW){ const line = brief(s) + "\n"; if (ctx.length + line.length > 4500) break; ctx += line; n++; }
+  return `I'm reading my daily business news brief (US business: deals, consumer & retail, sports business, media & ` +
+    `entertainment, celebrity founders). I also run ${BIB_SHORT}. Here are the stories I'm looking at:\n\n${ctx}\n` +
+    `My question: ${q}`;
+}
+const askURL = p => "https://claude.ai/new?q=" + encodeURIComponent(p);
 
 function sectionBlock(k, stories, dayLink){
   const S = sec(k);
@@ -187,7 +236,9 @@ function renderNav(st){
   const all = DATA.days.flatMap(d => d.stories);
   $("#navsec").innerHTML = Object.entries(DATA.sections).map(([k,S]) =>
     `<a href="#s=${k}" class="${st.s===k && !st.day ? "on":""}"><span><span class="dot" style="background:${S.color}"></span>${esc(S.label)}</span>
-     <span class="n">${all.filter(s => s.section===k).length}</span></a>`).join("");
+     <span class="n">${all.filter(s => s.section===k).length}</span></a>`).join("") +
+    `<a href="#bib=1" class="${st.bib ? "on":""}"><span><span class="bib">BIB</span>Everything BIB</span><span class="n">${all.filter(s => s.bib).length}</span></a>` +
+    `<a href="#g=1" class="${st.g ? "on":""}"><span>📘 Glossary</span><span class="n">${(DATA.glossary||[]).length}</span></a>`;
   const cur = st.day || (!st.s && !st.q && DATA.days[0]?.day);
   $("#navdays").innerHTML = DATA.days.map(d =>
     `<a href="#day=${d.day}" class="${d.day===cur ? "on":""}"><span>${fmt(d.day,{weekday:"short",month:"short",day:"numeric"})}</span>
@@ -202,12 +253,12 @@ function dayView(st){
   const only = st.s && present.includes(st.s) ? st.s : null;
   const chips = `<div class="chips"><a class="chip ${only?"":"on"}" style="${only?"":"background:var(--ink);color:var(--panel)"}" href="#day=${d.day}">All (${d.stories.length})</a>` +
     present.map(k => { const S = sec(k), n = d.stories.filter(s => s.section===k).length;
-      return `<a class="chip ${only===k?"on":""}" style="${only===k?`background:${S.color}`:""}" href="#day=${d.day}&s=${k}">${S.emoji} ${esc(S.label.split(" & ")[0])} (${n})</a>` }).join("") + `</div>`;
+      return `<a class="chip ${only===k?"on":""}" style="${only===k?`background:${S.color}`:""}" href="#day=${d.day}&s=${k}">${S.emoji} ${esc(k==="bib" ? "BIB Picks" : S.label.split(" & ")[0])} (${n})</a>` }).join("") + `</div>`;
   let h = `<h1 class="title">${fmt(d.day,{weekday:"long",month:"long",day:"numeric",year:"numeric"})}</h1>
     <div class="sub">${d.stories.length} stories</div>${chips}`;
   if (!only){
     if (d.tldr.length) h += `<div class="card tldr"><div class="label">⚡ TL;DR</div><ol>${d.tldr.map(t =>
-      `<li><a href="${esc(byId[t.story].links[0].url)}" target="_blank" rel="noopener"><b>${esc(t.text)}</b></a>${t.impact ? `<div class="impact"><b>Why it matters:</b> ${esc(t.impact)}</div>` : ""}</li>`).join("")}</ol></div>`;
+      `<li><a href="${esc(byId[t.story].links[0].url)}" target="_blank" rel="noopener">${byId[t.story].bib ? `<span class="bib">BIB</span>` : ""}<b>${esc(t.text)}</b></a>${t.impact ? `<div class="impact"><b>Why it matters:</b> ${esc(t.impact)}</div>` : ""}</li>`).join("")}</ol></div>`;
     if (d.deep_dives.length) h += `<div class="card deep"><div class="label">🔍 WORTH A DEEP DIVE</div>${d.deep_dives.map(x =>
       `<div class="item"><h4>${esc(x.title || byId[x.story].headline)}</h4><p>${esc(x.why)}</p><div class="meta">Read more: ${x.links.map(l =>
       `<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.source)}</a>`).join(" · ")}</div></div>`).join("")}</div>`;
@@ -239,11 +290,44 @@ function searchView(st){
       <div class="card">${g.map(s => storyHTML(s, true)).join("")}</div>`).join("") : `<div class="empty">No matches.</div>`);
 }
 
+function bibView(){
+  const rows = DATA.days.map(d => [d.day, d.stories.filter(s => s.bib)]).filter(([,g]) => g.length);
+  return `<h1 class="title" style="color:#B85C47">✨ Everything BIB</h1><div class="sub">Every story tagged for Beauty in Balance, across all days and sections</div>` +
+    (rows.length ? rows.map(([day,g]) => `<div class="when"><a href="#day=${day}" style="text-decoration:none">${fmt(day,{weekday:"long",month:"short",day:"numeric"})}</a></div>
+      <div class="card">${g.map(s => storyHTML(s, true)).join("")}</div>`).join("") : `<div class="empty">No BIB-tagged stories yet.</div>`);
+}
+
+function glossaryView(){
+  const g = DATA.glossary || [];
+  return `<h1 class="title">📘 Glossary</h1><div class="sub">Every finance & business term explained so far, A–Z</div>` +
+    (g.length ? `<div class="card">${g.map(t => `<div class="gl"><b>${esc(t.term)}</b> <small>· first seen <a href="#day=${t.day}">${fmt(t.day,{month:"short",day:"numeric"})}</a></small><p>${esc(t.def)}</p></div>`).join("")}</div>`
+              : `<div class="empty">Terms will collect here as they show up in the brief.</div>`);
+}
+
+$("#askbtn").onclick = () => { const p = $("#askpanel"); p.hidden = !p.hidden;
+  $("#askbtn").setAttribute("aria-expanded", String(!p.hidden)); if (!p.hidden) $("#askq").focus(); };
+document.querySelectorAll(".quick button").forEach(b => b.onclick = () => { $("#askq").value = b.textContent; $("#askq").focus(); });
+$("#askgo").onclick = () => { const q = $("#askq").value.trim(); if (!q) { $("#askq").focus(); return; }
+  window.open(askURL(contextPrompt(q)), "_blank", "noopener"); };
+
+function viewStories(st){
+  const all = DATA.days.flatMap(d => d.stories);
+  if (st.bib) return all.filter(s => s.bib);
+  if (st.q) { const t = st.q.toLowerCase(); return all.filter(s => (s.headline+" "+s.takeaway+" "+(s.tags||[]).join(" ")).toLowerCase().includes(t)); }
+  if (st.s && !st.day) return all.filter(s => s.section === st.s);
+  const d = DATA.days.find(x => x.day === st.day) || DATA.days[0];
+  if (!d) return [];
+  const ids = new Set((d.tldr||[]).map(t => t.story));  // TL;DR stories first
+  const ss = d.stories.filter(s => !st.s || s.section === st.s);
+  return [...ss.filter(s => ids.has(s.id)), ...ss.filter(s => !ids.has(s.id))];
+}
+
 function render(){
   const st = state();
+  VIEW = viewStories(st);
   if ($("#q").value.trim() !== (st.q||"")) $("#q").value = st.q || "";
   renderNav(st);
-  $("#main").innerHTML = st.q ? searchView(st) : (st.s && !st.day && DATA.sections[st.s]) ? sectionView(st) : dayView(st);
+  $("#main").innerHTML = st.g ? glossaryView() : st.bib ? bibView() : st.q ? searchView(st) : (st.s && !st.day && DATA.sections[st.s]) ? sectionView(st) : dayView(st);
   if (st.day && st.s) {} else window.scrollTo(0, 0);
 }
 </script>
